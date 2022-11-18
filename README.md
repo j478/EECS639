@@ -34,4 +34,4 @@ and outputs the string of the Newton polynomial such as:
 
 	ans = 
 
-	"-27 + 13(t - -2) + -4(t - -2)*t"
+		"-27 + 13(t - -2) + -4(t - -2)*t"
