@@ -1,19 +1,17 @@
-﻿# EECS 639 Project
+# EECS 639 Project
 
 ## Lagrange Polynomial
 Takes a matrix of ordered pairs such as:
 
-'
     >> pairs = [-2 -27; 0 -1; 1 0]
 
     pairs =
 
         -2   -27
         0    -1
-        1     0'
+        1     0
 and outputs the string of the Lagrange polynomial such as:
 
-'   
     >> lagrange(pairs)
     
     ans = 
