@@ -54,8 +54,3 @@ end
 polynomial = lStr + "[" + summations + "]";
 
 end
-
-
-
-
-
