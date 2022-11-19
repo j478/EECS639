@@ -47,6 +47,7 @@ Takes a matrix of ordered pairs such as:
         0    -1
         1     0
 and outputs the vandemonde matrix such as:
+
 	>> vandemondeMatrix(pairs)
 	
 	ans =
