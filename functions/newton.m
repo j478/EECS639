@@ -13,18 +13,10 @@ ys = orderedPairs(:, 2);
 
 %construct basis functions
 pis(n-1) = "";
-if ts(1) ~= 0
-    pis(1) = "(t - " + ts(1) + ")";
-else
-    pis(1) = "t";
-end
+pis(1) = getTStr(ts(1));
 
 for i=2:n-1
-    if (ts(i) ~= 0)
-        pis(i) = pis(i-1) + "*(t - " + ts(i) + ")";
-    else
-        pis(i) = pis(i-1) + "*t";
-    end
+    pis(i) = pis(i-1) + "*" + getTStr(ts(i));
 end
 
 %construct matrix with basis functions
@@ -59,4 +51,11 @@ polynomial = tmp;
 end
 
 
+function [str] = getTStr(t)
+if t ~= 0
+    str = "(t - " + t + ")";
+else
+    str = "t";
+end
 
+end
