@@ -48,8 +48,9 @@ Takes a matrix of ordered pairs such as:
         1     0
 and outputs the vandemonde matrix such as:
 
+	>> vandemondeMatrix(pairs)
+	
 	ans =
-
-     		1    -2     4
-     		1     0     0
-     		1     1     1
+	    1    -2     4
+	    1     0     0
+	    1     1     1
