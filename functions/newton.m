@@ -49,9 +49,9 @@ xs  = A\ys;
 tmp = xs(1) + " + ";
 for i=2:n
     if i ~= n
-        tmp = tmp + xs(i) + pis(i-1) + " + ";
+        tmp = tmp + xs(i) + "*" + pis(i-1) + " + ";
     else
-        tmp = tmp + xs(i) + pis(i-1);
+        tmp = tmp + xs(i) + "*" + pis(i-1);
     end
 end
 polynomial = tmp;
