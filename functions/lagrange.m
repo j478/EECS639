@@ -39,7 +39,7 @@ end
 %with later
 lStr = "";
 for i=1:n
-    lStr = lStr + l(i);
+    lStr = lStr + l(i) + "*";
 end
 
 summations = "";
@@ -51,6 +51,6 @@ for i=1:n
     end
 end
 
-polynomial = lStr + "[" + summations + "]";
+polynomial = lStr + "(" + summations + ")";
 
 end
