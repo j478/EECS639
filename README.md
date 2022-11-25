@@ -60,3 +60,4 @@ and outputs the vandemonde matrix such as:
 	    1    -2     4
 	    1     0     0
 	    1     1     1
+
