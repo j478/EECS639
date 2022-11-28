@@ -22,9 +22,8 @@ for i=1:n-1
     row = row + 2;
 end
 
-M = zeros(4*(n-1));
 %construct upper matrix
-
+M = zeros(4*(n-1));
 base = 1;
 row = 1;
 for i=1:n-1
@@ -35,7 +34,7 @@ for i=1:n-1
     base = base + 4;
 end
 
-%first derivative
+%first derivatives equal for interal knots
 base = 2;
 for i=2:n-1
     thisT = firstDerT(ts(i));
@@ -46,7 +45,7 @@ for i=2:n-1
     row = row+1;
 end
 
-%second derivative
+%second derivatives equal for internal knots
 base = 3;
 for i=2:n-1
     thisT = secondDerT(ts(i));
@@ -62,6 +61,6 @@ numVars = 4*(n-1);
 M(row,3:4) = secondDerT(ts(1));
 M(row+1, numVars-1:numVars) = secondDerT(ts(n));
 
-%polynomial = M\modifiedYs;
-polynomial = M;
+%[TODO]: solve this via gaussian elim or something more efficent
+polynomial = M\modifiedYs;
 end
