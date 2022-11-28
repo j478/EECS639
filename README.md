@@ -71,17 +71,24 @@ Takes a matrix of ordered pairs such as:
         -2   -27
         0    -1
         1     0
-and (currently) outputs a matrix such as:
+and outputs a vector of coefficents such as:
 
     >> naturalSpline(pairs)
 
     ans =
 
-        1    -2     4    -8     0     0     0     0
-        1     0     0     0     0     0     0     0
-        0     0     0     0     1     0     0     0
-        0     0     0     0     1     1     1     1
-        0     1     0     0     0     1     0     0
-        0     0     2     0     0     0     2     0
-        0     0     2   -12     0     0     0     0
-        0     0     0     0     0     0     2     6
+        -1.0000
+        3.6667
+        -7.0000
+        -1.1667
+        -1.0000
+        -3.6667
+        7.0000
+        -2.3333
+
+## Plotting Cubic Splines
+Passing a vector of coefficents, along with the set of ordered pairs used to generate them, the function `genPlotCubicSpline` will generate a plot with the given points, along with their corresponding cubic polynomials such as:
+
+    >> genPlotCubicSpline(coeffs, pairs)
+
+![natCubicSpline Plot](/sample_imgs/naturalSpline_sample.png?raw=true "Natural Cubic Spline Sample Plot")
