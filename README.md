@@ -61,3 +61,27 @@ and outputs the vandemonde matrix such as:
 	    1     0     0
 	    1     1     1
 
+## Natural Cubic Spline
+Takes a matrix of ordered pairs such as:
+
+    >> pairs = [-2 -27; 0 -1; 1 0]
+
+    pairs =
+
+        -2   -27
+        0    -1
+        1     0
+and (currently) outputs a matrix such as:
+
+    >> naturalSpline(pairs)
+
+    ans =
+
+        1    -2     4    -8     0     0     0     0
+        1     0     0     0     0     0     0     0
+        0     0     0     0     1     0     0     0
+        0     0     0     0     1     1     1     1
+        0     1     0     0     0     1     0     0
+        0     0     2     0     0     0     2     0
+        0     0     2   -12     0     0     0     0
+        0     0     0     0     0     0     2     6
