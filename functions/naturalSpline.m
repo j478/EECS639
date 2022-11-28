@@ -62,9 +62,6 @@ numVars = 4*(n-1);
 M(row,3:4) = secondDerT(ts(1));
 M(row+1, numVars-1:numVars) = secondDerT(ts(n));
 
-display(M);
-display(modifiedYs);
-
-polynomial = M\modifiedYs;
-
+%polynomial = M\modifiedYs;
+polynomial = M;
 end
