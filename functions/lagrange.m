@@ -34,5 +34,6 @@ for i=1:n
     end
 end
 
-polynomial = lStr + "(" + summations + ")";
+polyString = lStr + "(" + summations + ")";
+polynomial = inline(polyString, 't');
 end

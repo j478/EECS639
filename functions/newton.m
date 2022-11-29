@@ -46,8 +46,8 @@ for i=2:n
         tmp = tmp + xs(i) + "*" + pis(i-1);
     end
 end
-polynomial = tmp;
 
+polynomial = inline(tmp, 't');
 end
 
 
