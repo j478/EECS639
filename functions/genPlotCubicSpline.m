@@ -1,11 +1,18 @@
 function [] = genPlotCubicSpline(coeffs, pairs)
 %GENPLOTCUBICSPLINE takes a vector of coefficents corresponding to a system of cubic equations and order pairs, and plots them.
 %   plots the original points, as well as plots the corresponing functions that connnect them.
-hold on;
 
 n = length(pairs);
 ts = pairs(:,1);
+if length(coeffs) ~= 4*(n-1)
+    display("invalid input. number of coefficents must equal 4 * (number of pairs - 1)");
+    display("# of coefficents: " + length(coeffs));
+    display("# of ordered pairs: " + n);
+    display("4 * (# of ordered pairs - 1): " + 4*(n-1));
+    return;
+end
 
+hold on;
 %plot given points
 for i=1:length(pairs)
     plot(pairs(i,1), pairs(i,2), "*r");
@@ -29,6 +36,6 @@ for i=1:n-1
 
     coeffBase = coeffBase + 4;
 end
-hold off
+hold off;
     
 end

@@ -6,14 +6,14 @@ firstDerT = @(t) [1 2*t 3*t.^2];
 secondDerT = @(t) [2 6*t];
 
 if (choice ~= 'n') && (choice ~= 'k') && (choice ~= 'c')
-    display("invalid input for choice. please specify 'n' for natural, 'k' for not-a-knot, and 'c' for continuous");
-    coeffs = "";
+    display("invalid second input. please specify 'n' for natural, 'k' for not-a-knot, or 'c' for continuous");
+    coefficents = [];
     return;
 end
 
 n = length(orderedPairs);
 if n < 1
-    coeffs = "";
+    coefficents = [];
     return;
 end
 
