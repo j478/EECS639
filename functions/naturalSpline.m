@@ -40,7 +40,7 @@ for i=2:n-1
     thisT = firstDerT(ts(i));
     M(row,base:base+2) = thisT;
     base = base + 4;
-    M(row,base:base+2) = thisT;
+    M(row,base:base+2) = -thisT;
 
     row = row+1;
 end
@@ -51,7 +51,7 @@ for i=2:n-1
     thisT = secondDerT(ts(i));
     M(row,base:base+1) = thisT;
     base = base + 4;
-    M(row,base:base+1) = thisT;
+    M(row,base:base+1) = -thisT;
 
     row = row+1;
 end
