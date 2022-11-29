@@ -1,5 +1,5 @@
-function [polynomial] = lagrange(orderedPairs)
-%LAGRANGE takes a matrix of ordered pairs, and returns lagrange polynomial
+function [coeffs] = naturalSpline(orderedPairs)
+%NATURALSPLINE takes a matrix of ordered pairs, and returns lagrange polynomial
 %   Detailed explanation goes here
 cubicT = @(t) [1 t t.^2 t.^3];
 firstDerT = @(t) [1 2*t 3*t.^2];
@@ -7,7 +7,7 @@ secondDerT = @(t) [2 6*t];
 
 n = length(orderedPairs);
 if n < 1
-    polynomial = "";
+    coeffs = "";
     return;
 end
 
@@ -61,6 +61,6 @@ numVars = 4*(n-1);
 M(row,3:4) = secondDerT(ts(1));
 M(row+1, numVars-1:numVars) = secondDerT(ts(n));
 
-%[TODO]: solve this via gaussian elim or something more efficent
-polynomial = M\modifiedYs;
+%[TODO]: maybe don't want to use lsqr here, but will work for now
+coeffs = lsqr(M, modifiedYs, 1e-6, 100);
 end
