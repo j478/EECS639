@@ -80,5 +80,5 @@ switch choice
         display("I'm supposed to be unreachable! Something went horribly wrong!!");
 end
 
-coefficents = lsqr(M, modifiedYs, 1e-6, 100);
+coefficents = lsqr(M, modifiedYs, 1e-6, 500);
 end
