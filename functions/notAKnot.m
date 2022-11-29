@@ -1,5 +1,4 @@
 function[coeffs] = notAKnot(orderedPairs)
-
 %will eventuall combine all of this first part into one common function, and one will just pass a token specifying what type of spline they want
 cubicT = @(t) [1 t t.^2 t.^3];
 firstDerT = @(t) [1 2*t 3*t.^2];
@@ -40,7 +39,7 @@ for i=2:n-1
     thisT = firstDerT(ts(i));
     M(row,base:base+2) = thisT;
     base = base + 4;
-    M(row,base:base+2) = thisT;
+    M(row,base:base+2) = -thisT;
     
     row = row+1;
 end
@@ -51,7 +50,7 @@ for i=2:n-1
     thisT = secondDerT(ts(i));
     M(row,base:base+1) = thisT;
     base = base + 4;
-    M(row,base:base+1) = thisT;
+    M(row,base:base+1) = -thisT;
     
     row = row+1;
 end
@@ -59,11 +58,10 @@ end
 %setting third derivatives equal to each other
 numVars = 4*(n-1);
 M(row, 4) = 6;
-M(row, 8) = 6;
+M(row, 8) = -6;
 
 M(row+1, numVars-4) = 6;
-M(row+1, numVars) = 6;
-disp(M);
+M(row+1, numVars) = -6;
 
 coeffs = lsqr(M, modifiedYs, 1e-6, 100);
 end
