@@ -1,18 +1,34 @@
 function[] = plotData(fnString, interval, spacing)
 %GENDATA takes a function (as a string), an interval (as a vector of size 2), and spacing as an int. Returns set of ordered pairs
-    if length(interval) ~= 2
-        display("invalid input. interval must have form [<lower bound>, <upper bound>]");
-    end
+    %To generate the plots with the ordered pairs form the project description, pass in "Data" as fnString, and blank strings for the rest of the parameters
+    paris = [];
+    if fnString ~= "Dates"
+        if length(interval) ~= 2
+            display("invalid input. interval must have form [<lower bound>, <upper bound>]");
+            return;
+        end
 
-    currentFn = inline(fnString, 'x');
-    xs = linspace(interval(1), interval(2), spacing)';
-    ys = xs;
-    for i=1:length(xs)
-        ys(i) = currentFn(xs(i));
+        currentFn = inline(fnString, 'x');
+        xs = linspace(interval(1), interval(2), spacing)';
+        ys = xs;
+        for i=1:length(xs)
+            ys(i) = currentFn(xs(i));
+        end
+        pairs = [xs ys];
+    else
+        pairs = [1994 67.052; 1995 68.008; 1996 69.83; 1997 72.024; 1998 73.400; 1999 72.063;
+        2000 74.669; 2001 74.487; 2002 74.065; 2003 76.777];
     end
-    pairs = [xs ys];
 
     pos = 1;
+
+    vandemondePoly = vandemonde(pairs);
+    display(vandemondePoly);
+    subplot(3, 3, pos);
+    genPlotPolynomial(vandemondePoly, pairs);
+    title("Vandemonde Polynomial");
+
+    pos = pos + 1;
 
     newtonPoly = newton(pairs);
     subplot(3, 3, pos);
@@ -28,15 +44,6 @@ function[] = plotData(fnString, interval, spacing)
 
     pos = pos + 1;
 
-    %{
-        vandemondePoly = vandemonde(pairs);
-        subplot(3, 3, pos);
-        genPlotPolynomial(vandemondePoly, pairs);
-        title("Vandemonde Polynomial");
-    %}
-
-    pos = pos + 1;
-
     natCoeffs = cubicSpline(pairs, "n");
     subplot(3, 3, pos);
     genPlotCubicSpline(natCoeffs, pairs);
@@ -44,19 +51,17 @@ function[] = plotData(fnString, interval, spacing)
 
     pos = pos + 1;
 
+    continuousCoeffs = cubicSpline(pairs, "c");
+    subplot(3, 3, pos);
+    genPlotCubicSpline(continuousCoeffs, pairs);
+    title("Complete Spline");
+
+    pos = pos + 1;
+
     notAKnotCoeffs = cubicSpline(pairs, "k");
     subplot(3, 3, pos);
     genPlotCubicSpline(notAKnotCoeffs, pairs);
     title("Not-A-Knot Spline");
-
-    pos = pos + 1;
-
-    %{
-        continuousCoeffs = cubicSpline(pairs, "c");
-        subplot(3, 3, pos);
-        genPlotPolynomial(continuousCoeffs, pairs);
-        title("continuous Spline");
-    %}
 
     sgtitle("f(x) = " + fnString);
 
@@ -79,11 +84,7 @@ function [] = genPlotPolynomial(poly, pairs)
         plot(pairs(i,1), pairs(i,2), "*r");
     end
     
-    lower = ts(1);
-    upper = ts(n);
-    spacing = (upper-lower)/800;
-    
-    xs = lower:spacing:upper;
+    xs = linspace(ts(1),ts(n),800);
     ys = xs;
     for i=1:length(xs)
         ys(i) = poly(xs(i));
@@ -117,20 +118,22 @@ function [] = genPlotCubicSpline(coeffs, pairs)
     %`coeffs` by 4 (since there are always four coefficents), and turning them into a string along with the variable 't' in order to generate
     %the correct funciton. A vector consisting of values between the current points are then applied to the function, and the corresponding values are
     %then plotted together. This is done for every interval in the ordered pairs.
+    xs = linspace(ts(1), ts(n), 1000);
+    ys = xs;
+
     coeffBase = 1;
-    for i=1:n-1
+    tctr = 2;
+    for i=1:length(xs)
         currPolyString = coeffs(coeffBase+3) + "*(t.^3) + " + coeffs(coeffBase+2) + "*(t.^2) + " + coeffs(coeffBase+1) + "*(t) + " + coeffs(coeffBase);
         currPoly = inline(currPolyString, 't');
-    
-        xs = ts(i):.01:ts(i+1);
-        ys = xs;
-        for j=1:length(xs)
-            ys(j) = currPoly(xs(j));
+        ys(i) = currPoly(xs(i));
+
+        if xs(i) > ts(tctr)
+            tctr = tctr + 1;
+            coeffBase = coeffBase + 4;
         end
-        plot(xs,ys);
-    
-        coeffBase = coeffBase + 4;
     end
+    plot(xs, ys);
     hold off;
         
 end
