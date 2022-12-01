@@ -75,10 +75,18 @@ switch choice
         M(row+1, numVars-4) = 6;
         M(row+1, numVars) = -6;
     case 'c'
-        display("try this again later!!");
+        M(row,2:4) = firstDerT(ts(1));
+        modifiedYs(row) = 1;
+        
+        M(row+1, numVars-2:numVars) = firstDerT(ts(n));
+        modifiedYs(row+1) = 1;
     otherwise
         display("I'm supposed to be unreachable! Something went horribly wrong!!");
 end
 
 coefficents = lsqr(M, modifiedYs, 1e-6, 500);
+%coefficent = M\modifiedYs;
+%[L,U] = lu(M);
+%y = L\modifiedYs;
+%coefficents = U\y;
 end
