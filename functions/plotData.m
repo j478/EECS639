@@ -23,7 +23,6 @@ function[] = plotData(fnString, interval, spacing)
     pos = 1;
 
     vandemondePoly = vandemonde(pairs);
-    display(vandemondePoly);
     subplot(3, 3, pos);
     genPlotPolynomial(vandemondePoly, pairs);
     title("Vandemonde Polynomial");
