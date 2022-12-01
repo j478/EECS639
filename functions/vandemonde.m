@@ -18,7 +18,7 @@ end
 
 
 
-coeffs = lsqr(A, ys, 1e-6, 500);
+coeffs = lsqr(A, ys, 1e-10, 500);
 
 polyString = "" + coeffs(1);
 for i=1:n-1

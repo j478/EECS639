@@ -84,9 +84,5 @@ switch choice
         display("I'm supposed to be unreachable! Something went horribly wrong!!");
 end
 
-coefficents = lsqr(M, modifiedYs, 1e-6, 500);
-%coefficent = M\modifiedYs;
-%[L,U] = lu(M);
-%y = L\modifiedYs;
-%coefficents = U\y;
+coefficents = lsqr(M, modifiedYs, 1e-10, 1000);
 end
