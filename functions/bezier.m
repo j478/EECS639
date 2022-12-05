@@ -1,5 +1,16 @@
 function [coefficients] = bezier(n,endPoint,leftGuide,rightGuide)
 %BEZIER Summary of this function goes here
+%   INPUT: 
+%       n: int, number of points
+%       endPoint: 2xn matrix, coordinates from endpoints on original
+%       function
+%       leftGuide: 2x(n-1) matrix, coordinates from first derivative on
+%       left derivative
+%       rightGuide: 2x(n-1) matrix, coordinates from first derivative on
+%       right guide
+%   OUTPUT:
+%       coefficients: nx8 matrix, coefficients for bezier curve [a1, a2,
+%       a3, a4, b1, b2, b3, b4]
 %   Detailed explanation goes here
 coefficients = zeros(n,8);
 for i = 1:n
@@ -11,6 +22,5 @@ for i = 1:n
     coefficients(i,6) = 3 * (leftGuide(2,i) - endPoint(2,i));
     coefficients(i,7) = 3 * (endPoint(2,i) + rightGuide(2,i) - 2 * leftGuide(2,i));
     coefficients(i,8) = endPoint(1,(i+1)) - endPoint(1,i) + 3 * leftGuide(1,i) - 3 * rightGuide(1,i);
-%coefficients = (n, size(endPoint), size(leftGuide), size(rightGuide))
 end
 
