@@ -16,8 +16,7 @@ for i=1:n
     end
 end
 
-
-
+%must be lsqr becuase matrix here is nearly singular
 coeffs = lsqr(A, ys, 1e-10, 500);
 
 polyString = "" + coeffs(1);
