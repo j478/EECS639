@@ -1,4 +1,4 @@
-function[coefficents] = cubicSpline(orderedPairs, choice)
+function[coefficents] = cubicSpline(orderedPairs, choice, rescale)
 %CUBICSPLINE takes a matrix of ordered pairs, as well as a specifier, and returns the coefficents for the cubic equations.
 %   usage: cubicSpline(<ordered pairs>, <token>) where <token> is either 'n' for natural spline, 'k' for not-a-knot, or 'c' for continuous spline
 cubicT = @(t) [1 t t.^2 t.^3];
@@ -19,6 +19,9 @@ end
 
 %take list of ordered pairs, and split them on ts and ys.
 ts = orderedPairs(:,1);
+if rescale ~= 0
+    ts = ts*rescale;
+end
 ys = orderedPairs(:,2);
 modifiedYs = zeros((4*(n-1)),1);
 row = 1;
@@ -84,5 +87,5 @@ switch choice
         display("I'm supposed to be unreachable! Something went horribly wrong!!");
 end
 
-coefficents = lsqr(M, modifiedYs, 1e-10, 1000);
+coefficents = M\modifiedYs;
 end
