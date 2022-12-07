@@ -1,7 +1,8 @@
 function[] = plotData(fnString, interval, spacing)
 %GENDATA takes a function (as a string), an interval (as a vector of size 2), and spacing as an int. Returns set of ordered pairs
     %To generate the plots with the ordered pairs form the project description, pass in "Data" as fnString, and blank strings for the rest of the parameters
-    paris = [];
+    figure();
+    pairs = [];
     rescale = 0;
     if fnString ~= "Dates"
         if length(interval) ~= 2
@@ -24,7 +25,7 @@ function[] = plotData(fnString, interval, spacing)
 
     pos = 1;
 
-    VandermondePoly = Vandermonde(pairs);
+    VandermondePoly = vandermonde(pairs);
     subplot(3, 3, pos);
     genPlotPolynomial(VandermondePoly, pairs);
     title("Vandermonde Polynomial");
@@ -129,7 +130,8 @@ function [] = genPlotCubicSpline(coeffs, pairs, rescale)
     coeffBase = 1;
     tctr = 2;
     for i=1:length(xs)
-        currPolyString = coeffs(coeffBase+3) + "*(t.^3) + " + coeffs(coeffBase+2) + "*(t.^2) + " + coeffs(coeffBase+1) + "*(t) + " + coeffs(coeffBase);
+        %Horner's nested eval
+        currPolyString = coeffs(coeffBase) + " + t*(" + coeffs(coeffBase+1) + " + t*(" + coeffs(coeffBase+2) + " + t*" + coeffs(coeffBase+3) + "))";
         currPoly = inline(currPolyString, 't');
         ys(i) = currPoly(xs(i));
 
