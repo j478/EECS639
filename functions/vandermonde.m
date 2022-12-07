@@ -20,10 +20,14 @@ end
 display(cond(A));
 coeffs = lsqr(A, ys, 1e-10, 500);
 
+%Horner's nested eval
 polyString = "" + coeffs(1);
-for i=1:n-1
-    polyString = polyString + " + (" + coeffs(i+1) + "*(t.^" + i + "))";
+endParens(n-2) = "";
+for i=1:n-2
+    polyString = polyString + " + t*(" + coeffs(i+1);
+    endParens(i) = ")";
 end
+polyString = polyString + " + t*" + coeffs(i+2) + sprintf('%s', endParens);
 
 polynomial = inline(polyString, "t");
 end
