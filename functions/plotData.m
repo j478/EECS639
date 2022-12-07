@@ -2,7 +2,7 @@ function[] = plotData(fnString, interval, spacing)
 %GENDATA takes a function (as a string), an interval (as a vector of size 2), and spacing as an int. Returns set of ordered pairs
     %To generate the plots with the ordered pairs form the project description, pass in "Data" as fnString, and blank strings for the rest of the parameters
     paris = [];
-    rescale = 1e-4;
+    rescale = 0;
     if fnString ~= "Dates"
         if length(interval) ~= 2
             display("invalid input. interval must have form [<lower bound>, <upper bound>]");
@@ -19,14 +19,15 @@ function[] = plotData(fnString, interval, spacing)
     else
         pairs = [1994 67.052; 1995 68.008; 1996 69.83; 1997 72.024; 1998 73.400; 1999 72.063;
         2000 74.669; 2001 74.487; 2002 74.065; 2003 76.777];
+        rescale = 1e-4;
     end
 
     pos = 1;
 
-    vandemondePoly = vandemonde(pairs);
+    VandermondePoly = Vandermonde(pairs);
     subplot(3, 3, pos);
-    genPlotPolynomial(vandemondePoly, pairs);
-    title("Vandemonde Polynomial");
+    genPlotPolynomial(VandermondePoly, pairs);
+    title("Vandermonde Polynomial");
 
     pos = pos + 1;
 
