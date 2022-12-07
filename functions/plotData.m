@@ -1,7 +1,12 @@
 function[] = plotData(fnString, interval, spacing)
 %GENDATA takes a function (as a string), an interval (as a vector of size 2), and spacing as an int. Returns set of ordered pairs
     %To generate the plots with the ordered pairs form the project description, pass in "Data" as fnString, and blank strings for the rest of the parameters
+
+    %generate new figure
     figure();
+
+    %if user does not want to plot dates, evaluate given function with given parameters
+    %else, use the Dates data set, and set the rescale value
     pairs = [];
     rescale = 0;
     if fnString ~= "Dates"
@@ -23,6 +28,7 @@ function[] = plotData(fnString, interval, spacing)
         rescale = 1e-4;
     end
 
+    %want to go through each method, and plot it with the given data set to different subplots on the figure
     pos = 1;
 
     VandermondePoly = vandermonde(pairs);
@@ -65,6 +71,7 @@ function[] = plotData(fnString, interval, spacing)
     genPlotCubicSpline(notAKnotCoeffs, pairs, rescale);
     title("Not-A-Knot Spline");
 
+    %setting figure title to be the given function or "Dates"
     sgtitle("f(x) = " + fnString);
 
 end
@@ -73,6 +80,7 @@ function [] = genPlotPolynomial(poly, pairs)
 %GENPLOTPOLYNOMIAL takes a polynomial (in the form of an inline function) and ordered pairs, and plots them together.
 %   plots the original points, as well as plots the given polynomial for that range.
     
+    %fail on bad input
     n = length(pairs);
     ts = pairs(:,1);
     if n < 2
@@ -100,12 +108,14 @@ function [] = genPlotCubicSpline(coeffs, pairs, rescale)
 %GENPLOTCUBICSPLINE takes a vector of coefficents corresponding to a system of cubic equations and order pairs, and plots them.
 %   plots the original points, as well as plots the corresponing functions that connnect them.
     
+    %if given value for rescale, rescale the ts (specific for dates data set)
     n = length(pairs);
     ts = pairs(:,1);
     if rescale ~= 0
         ts = ts*rescale;
     end
 
+    %fail on bad input
     if length(coeffs) ~= 4*(n-1)
         display("invalid input. number of coefficents must equal 4 * (number of pairs - 1)");
         display("# of coefficents: " + length(coeffs));
@@ -141,6 +151,7 @@ function [] = genPlotCubicSpline(coeffs, pairs, rescale)
         end
     end
 
+    %rescale the values back to og before plotting
     if rescale ~= 0
         inv = floor(log10(rescale)) * -1;
         rescale = 1 * 10.^inv;

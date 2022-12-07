@@ -1,5 +1,5 @@
 function [polynomial] = lagrange(orderedPairs)
-%LAGRANGE takes a matrix of ordered pairs, and returns lagrange polynomial
+%LAGRANGE takes a matrix of ordered pairs, and returns an evaluable lagrange polynomial
 %   Detailed explanation goes here
 
 %take list of ordered pairs, and split them on ts and ys.
@@ -17,6 +17,7 @@ for i=1:n
         end
     end
 
+    %constructing basis function
     l = "";
     if (ts(i) ~= 0)
         l = "(t - " + ts(i) + ")";
@@ -25,6 +26,7 @@ for i=1:n
     end
     lStr = lStr + l + "*";
 
+    %calculating barycentric weights
     w = 1 / mult;
     top = w * ys(i);
     if i ~= n
@@ -34,6 +36,7 @@ for i=1:n
     end
 end
 
+%construct the final polynomial string, and convert it into an evaluable function
 polyString = lStr + "(" + summations + ")";
 polynomial = inline(polyString, 't');
 end
