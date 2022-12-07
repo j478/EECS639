@@ -12,9 +12,9 @@ function [coefficients] = bezier(n,endPoint,leftGuide,rightGuide)
 %       coefficients: nx8 matrix, coefficients for bezier curve [a1, a2,
 %       a3, a4, b1, b2, b3, b4]
 %   Detailed explanation goes here
-t = linspace(0,1,20);
+t = linspace(0,1,n);
 coefficients = zeros(n,8);
-for i = 1:n
+for i = 1:n-1
     coefficients(i,1) = endPoint(i,1);
     coefficients(i,2) = 3 * (leftGuide(i,1) - endPoint(i,1));
     coefficients(i,3) = 3 * (endPoint(i,1) + rightGuide(i,1) - 2 * leftGuide(i,1));
