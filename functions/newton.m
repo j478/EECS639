@@ -35,6 +35,7 @@ for i=1:n
 end
 
 %solve for xs
+display(cond(A));
 xs  = A\ys;
 
 %construct polynomial
