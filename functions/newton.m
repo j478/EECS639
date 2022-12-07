@@ -1,6 +1,8 @@
 function [polynomial] = newton(orderedPairs)
-%NEWTON Summary of this function goes here
+%NEWTON takes a matrix of ordered pairs, and returns an evaluable Newton polynomail
 %   Detailed explanation goes here
+
+%If given an empty matrix, fail
 n = length(orderedPairs);
 if n < 1
     polynomial = "";
@@ -14,12 +16,11 @@ ys = orderedPairs(:, 2);
 %construct basis functions
 pis(n-1) = "";
 pis(1) = getTStr(ts(1));
-
 for i=2:n-1
     pis(i) = pis(i-1) + "*" + getTStr(ts(i));
 end
 
-%construct matrix with basis functions
+%construct matrix from basis functions
 A = zeros(n);
 for i=1:n
     for j=1:n
@@ -34,8 +35,7 @@ for i=1:n
     end
 end
 
-%solve for xs
-display(cond(A));
+%solve system for xs
 xs  = A\ys;
 
 %construct polynomial
@@ -48,10 +48,12 @@ for i=2:n
     end
 end
 
+%return evaluable polynomial
 polynomial = inline(tmp, 't');
 end
 
 
+%helper function for formatting
 function [str] = getTStr(t)
 if t ~= 0
     str = "(t - " + t + ")";
