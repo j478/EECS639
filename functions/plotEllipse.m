@@ -15,6 +15,9 @@ ellipseYprime = @(t) 6*cos(3*t);
 x_coord = ellipseX(t); % create n points
 y_coord = ellipseY(t);
 
+scatter(x_coord,y_coord);
+hold on
+
 alpha = ellipseXprime(t); % create the tranformations for the guide points
 beta = ellipseYprime(t);
 
