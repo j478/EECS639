@@ -1,5 +1,5 @@
-function [polynomial] = vandemonde(orderedPairs)
-%VANDEMONDEMATRIX Summary of this function goes here
+function [polynomial] = vandermonde(orderedPairs)
+%VandermondeMATRIX Summary of this function goes here
 %   Detailed explanation goes here
 n = length(orderedPairs);
 ts = orderedPairs(:,1);
@@ -16,8 +16,8 @@ for i=1:n
     end
 end
 
-
-
+%must be lsqr becuase matrix here is nearly singular
+display(cond(A));
 coeffs = lsqr(A, ys, 1e-10, 500);
 
 polyString = "" + coeffs(1);

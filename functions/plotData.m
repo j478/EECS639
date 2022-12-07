@@ -2,6 +2,7 @@ function[] = plotData(fnString, interval, spacing)
 %GENDATA takes a function (as a string), an interval (as a vector of size 2), and spacing as an int. Returns set of ordered pairs
     %To generate the plots with the ordered pairs form the project description, pass in "Data" as fnString, and blank strings for the rest of the parameters
     paris = [];
+    rescale = 0;
     if fnString ~= "Dates"
         if length(interval) ~= 2
             display("invalid input. interval must have form [<lower bound>, <upper bound>]");
@@ -18,14 +19,15 @@ function[] = plotData(fnString, interval, spacing)
     else
         pairs = [1994 67.052; 1995 68.008; 1996 69.83; 1997 72.024; 1998 73.400; 1999 72.063;
         2000 74.669; 2001 74.487; 2002 74.065; 2003 76.777];
+        rescale = 1e-4;
     end
 
     pos = 1;
 
-    vandemondePoly = vandemonde(pairs);
+    VandermondePoly = Vandermonde(pairs);
     subplot(3, 3, pos);
-    genPlotPolynomial(vandemondePoly, pairs);
-    title("Vandemonde Polynomial");
+    genPlotPolynomial(VandermondePoly, pairs);
+    title("Vandermonde Polynomial");
 
     pos = pos + 1;
 
@@ -43,23 +45,23 @@ function[] = plotData(fnString, interval, spacing)
 
     pos = pos + 1;
 
-    natCoeffs = cubicSpline(pairs, "n");
+    natCoeffs = cubicSpline(pairs, "n", rescale);
     subplot(3, 3, pos);
-    genPlotCubicSpline(natCoeffs, pairs);
+    genPlotCubicSpline(natCoeffs, pairs, rescale);
     title("Natural Spline");
 
     pos = pos + 1;
 
-    continuousCoeffs = cubicSpline(pairs, "c");
+    continuousCoeffs = cubicSpline(pairs, "c", rescale);
     subplot(3, 3, pos);
-    genPlotCubicSpline(continuousCoeffs, pairs);
+    genPlotCubicSpline(continuousCoeffs, pairs, rescale);
     title("Complete Spline");
 
     pos = pos + 1;
 
-    notAKnotCoeffs = cubicSpline(pairs, "k");
+    notAKnotCoeffs = cubicSpline(pairs, "k", rescale);
     subplot(3, 3, pos);
-    genPlotCubicSpline(notAKnotCoeffs, pairs);
+    genPlotCubicSpline(notAKnotCoeffs, pairs, rescale);
     title("Not-A-Knot Spline");
 
     sgtitle("f(x) = " + fnString);
@@ -93,12 +95,16 @@ function [] = genPlotPolynomial(poly, pairs)
     
 end
 
-function [] = genPlotCubicSpline(coeffs, pairs)
+function [] = genPlotCubicSpline(coeffs, pairs, rescale)
 %GENPLOTCUBICSPLINE takes a vector of coefficents corresponding to a system of cubic equations and order pairs, and plots them.
 %   plots the original points, as well as plots the corresponing functions that connnect them.
     
     n = length(pairs);
     ts = pairs(:,1);
+    if rescale ~= 0
+        ts = ts*rescale;
+    end
+
     if length(coeffs) ~= 4*(n-1)
         display("invalid input. number of coefficents must equal 4 * (number of pairs - 1)");
         display("# of coefficents: " + length(coeffs));
@@ -131,6 +137,12 @@ function [] = genPlotCubicSpline(coeffs, pairs)
             tctr = tctr + 1;
             coeffBase = coeffBase + 4;
         end
+    end
+
+    if rescale ~= 0
+        inv = floor(log10(rescale)) * -1;
+        rescale = 1 * 10.^inv;
+        xs = xs * rescale;
     end
     plot(xs, ys);
     hold off;

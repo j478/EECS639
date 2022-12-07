@@ -42,7 +42,7 @@ Which, when plotted with the original data points, produces:
 
 ![Newton Plot](/sample_imgs/newton_sample.png?raw=true "Newton Sample Plot")
 
-## Vandemonde Matrix
+## Vandermonde Matrix
 Takes a matrix of ordered pairs such as:
 
     >> pairs = [-2 -27; 0 -1; 1 0]
@@ -52,9 +52,9 @@ Takes a matrix of ordered pairs such as:
         -2   -27
         0    -1
         1     0
-and outputs the vandemonde matrix such as:
+and outputs the Vandermonde matrix such as:
 
-	>> vandemondeMatrix(pairs)
+	>> VandermondeMatrix(pairs)
 	
 	ans =
 	    1    -2     4
